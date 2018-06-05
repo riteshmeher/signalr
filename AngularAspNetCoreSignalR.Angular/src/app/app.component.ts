@@ -21,17 +21,17 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.nick = window.prompt('Your name:', 'John');
 
-    this._hubConnection = new HubConnection('http://localhost:5000/chat');
+    this._hubConnection = new HubConnection('http://localhost:12345/api/connect');
 
     this._hubConnection
       .start()
       .then(() => console.log('Connection started!'))
       .catch(err => console.log('Error while establishing connection :('));
 
-      this._hubConnection.on('sendToAll', (nick: string, receivedMessage: string) => {
-        const text = `${nick}: ${receivedMessage}`;
-        this.messages.push(text);
-      });
+    this._hubConnection.on('sendToAll', (nick: string, receivedMessage: string) => {
+      const text = `${nick}: ${receivedMessage}`;
+      this.messages.push(text);
+    });
 
-    }
+  }
 }
